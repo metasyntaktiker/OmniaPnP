@@ -144,7 +144,10 @@ function parseTalentRow(row) {
     const variantCount = Math.max(...baseOptions.map(options => options.length));
     if (baseOptions.some(options => options.some(option => !option) || (options.length !== 1 && options.length !== variantCount))) continue;
 
-    const values = row.slice(nameIndex + 4, nameIndex + 7).map(parseNumber);
+    const rawValues = row.slice(nameIndex + 4, nameIndex + 7);
+    const values = rawValues.map((value, index) =>
+      index === 1 && !value?.trim() ? 0 : parseNumber(value)
+    );
     if (values.some(value => value === null)) continue;
 
     return {

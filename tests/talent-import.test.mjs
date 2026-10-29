@@ -109,6 +109,110 @@ test("imports profile, stats, calculated values, and talents from Import_V1.0Exa
   ]);
 });
 
+test("imports profile, stats, calculated values, and talents from Import_V0.1ExampleGerman.md", async () => {
+  const text = await readFile(new URL("Import_V0.1ExampleGerman.md", import.meta.url), "utf8");
+  const result = parseTalentImport(text);
+
+  assert.equal(result.sectionFound, true);
+  assert.deepEqual(result.profile, {
+    playername: "Shine",
+    name: "Hanz",
+    age: 40,
+    height: "1,8",
+    weight: "90",
+    backstory: "Hanz ist ein Reliktsammler der sich auf Kreigsrelikte aus dem Zweiten und ersten Weltkierg spezialisiert hat Freut sich aber auch Über andere Funde aus dem Erkunden von Verlassenden Orten mit Metalldetektor und anderen Geräten"
+  });
+  assert.deepEqual(result.baseValues, {
+    str: 40,
+    agi: 60,
+    pre: 65,
+    con: 55,
+    int: 30,
+    cha: 35,
+    wil: 35,
+    see: 52,
+    hear: 36,
+    smell: 38,
+    luck: 21
+  });
+  assert.deepEqual(result.calculatedValues, {
+    hp: 36,
+    ep: 31,
+    mp: 20,
+    kp: 23,
+    sp: 13,
+    rst: 3,
+    res: 3,
+    tou: 5,
+    speed: 7,
+    initiative: 6
+  });
+  assert.equal(result.talents.length, 36);
+  assert.deepEqual(result.talents.map(talent => talent.name), [
+    "Balance",
+    "Kraftakt",
+    "Verbergen",
+    "Betören",
+    "Einschüchtern",
+    "Lügen & Betrügen",
+    "Menschenkenntnis",
+    "Überreden & Überzeugen",
+    "Selbstbewusstsein",
+    "Geographie & Orientierung",
+    "Geschichte & Sagen",
+    "Kulturen & Bräuche",
+    "Computerwissen",
+    "Recherche",
+    "Okkultismus",
+    "Handwerk",
+    "Fahren & Steuern",
+    "Handeln & Feilschen",
+    "Heilkunde Geist",
+    "Heilkunde Körper",
+    "Malen & Zeichnen",
+    "Gaukeleien",
+    "Musizieren",
+    "Singen",
+    "Tanzen",
+    "Zechen",
+    "Faust",
+    "Faust",
+    "Nahkampf Scharf",
+    "Nahkampf Scharf",
+    "Nahkampf Stumpf",
+    "Faustfeuerwaffe",
+    "Gewehr",
+    "Gewehr",
+    "Wurfwaffe",
+    "Wurfwaffe"
+  ]);
+  assert.equal(result.skippedRows, 0);
+  assert.deepEqual(result.talents.filter(talent => talent.name === "Faust"), [
+    { name: "Faust", base1: "agi", base2: "agi", base3: "agi", value: 5 },
+    { name: "Faust", base1: "str", base2: "str", base3: "str", value: 5 }
+  ]);
+  assert.deepEqual(
+    result.talents.filter(talent => talent.value === 0).map(talent => talent.name),
+    [
+      "Betören",
+      "Lügen & Betrügen",
+      "Menschenkenntnis",
+      "Selbstbewusstsein",
+      "Geschichte & Sagen",
+      "Kulturen & Bräuche",
+      "Recherche",
+      "Okkultismus",
+      "Malen & Zeichnen",
+      "Gaukeleien",
+      "Musizieren",
+      "Singen",
+      "Tanzen",
+      "Zechen",
+      "Nahkampf Stumpf"
+    ]
+  );
+});
+
 test("expands slash-separated combat bases into aligned talent variants", async () => {
   const text = await readFile(new URL("FirstImport_Example1GermanImport.md", import.meta.url), "utf8");
   const talents = parseTalentImport(text).talents.filter(talent => talent.name === "Faust");
@@ -274,6 +378,8 @@ test("does not import talent rows with unknown bases, mismatched alternatives, o
     "Unknown base\tNot an attribute\tAgility\tWill\t10\t2\t12",
     "Mismatched alternatives\tAgility / Strength\tAgility / Strength / Precision\tWill\t10\t2\t12",
     "Invalid points\tAgility\tAgility\tWill\t10\tinvalid\t12",
+    "Missing bonus\tAgility\tAgility\tWill\t\t2\t12",
+    "Missing sum\tAgility\tAgility\tWill\t10\t2\t",
     "Missing base\tAgility\t\tWill\t10\t2\t12"
   ].join("\n"));
 
