@@ -56,6 +56,59 @@ for (const example of examples) {
   });
 }
 
+test("imports profile, stats, calculated values, and talents from Import_V1.0ExampleGerman.md", async () => {
+  const text = await readFile(new URL("Import_V1.0ExampleGerman.md", import.meta.url), "utf8");
+  const firstRow = text.split(/\r?\n/, 1)[0].split("\t");
+  const result = parseTalentImport(text);
+
+  assert.deepEqual(firstRow.slice(0, 2), ["Charakterbogen Version", "v1.0"]);
+  assert.equal(result.sectionFound, true);
+  assert.deepEqual(result.profile, {
+    playername: "Andy",
+    name: "Nagisa123",
+    species: "Mensch",
+    age: 19,
+    placeofbirth: "Kalleth",
+    home: "Kalleth Waisenhaus",
+    appearance: "Klein, zierlich, lumpig",
+    height: "152cm",
+    weight: "44kg",
+    backstory: "Siehe Discord"
+  });
+  assert.deepEqual(result.baseValues, {
+    str: 75,
+    agi: 29,
+    pre: 62,
+    con: 74,
+    int: 42,
+    cha: 51,
+    wil: 36,
+    see: 38,
+    hear: 50,
+    smell: 46,
+    luck: 23
+  });
+  assert.deepEqual(result.calculatedValues, {
+    hp: 49,
+    ep: 34,
+    mp: 28,
+    kp: 24,
+    sp: 15,
+    rst: 4,
+    res: 3,
+    tou: 7,
+    speed: 5,
+    initiative: 2,
+    dodge: 31
+  });
+  assert.equal(result.talents.length, 77);
+  assert.equal(result.skippedRows, 0);
+  assert.deepEqual(result.talents.filter(talent => talent.name === "Faust"), [
+    { name: "Faust", base1: "agi", base2: "agi", base3: "agi", value: 24 },
+    { name: "Faust", base1: "str", base2: "str", base3: "str", value: 24 }
+  ]);
+});
+
 test("expands slash-separated combat bases into aligned talent variants", async () => {
   const text = await readFile(new URL("FirstImport_Example1GermanImport.md", import.meta.url), "utf8");
   const talents = parseTalentImport(text).talents.filter(talent => talent.name === "Faust");
