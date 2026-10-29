@@ -37,7 +37,7 @@ The character sheet reads Actor data in `_prepareContext`, renders Handlebars te
 - Base and calculated stat imports update `.value` and `.total` while preserving the existing `.modifier`. Do not overwrite current resource values (for example `hp.currentValue`) when importing calculated maxima.
 - Talent rows are found by their structure (a name, three recognized base labels, and three numbers); do not rely on fixed whitespace or all cells starting in column one. The talent value is the second numeric cell, corresponding to the assigned talent points. Each successful import replaces `actor.system.talents` with imported talents; if no valid talent rows are present, clear the list.
 - Slash-separated base alternatives create aligned variants: if all three bases are `Gewandtheit / Stärke`, produce a triple-AGI variant and a triple-STR variant, not mixed combinations. Update the example files and verify output if changing this behavior.
-- `tests/Example1EnglishImport.md` and `tests/Example*GermanImport.md` are import fixtures. Keep them representative, and keep each fixture covered by `tests/talent-import.test.mjs`.
+- `tests/FirstImport_Example1EnglishImport.md` and `tests/Example*GermanImport.md` are import fixtures. Keep them representative, and keep each fixture covered by `tests/talent-import.test.mjs`.
 
 ## Talent-system rules for code changes
 

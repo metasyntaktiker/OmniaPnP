@@ -5,19 +5,19 @@ import { parseTalentImport } from "../scripts/sheets/talent-import.mjs";
 
 const examples = [
   {
-    file: "Example1GermanImport.md",
+    file: "FirstImport_Example1GermanImport.md",
     baseValues: { str: 36, agi: 59, pre: 35, con: 25, int: 74, cha: 43, wil: 26, see: 27, hear: 22, smell: 27, luck: 22 },
     calculatedValues: { hp: 16, ep: 23, mp: 49, kp: 17, sp: 19, rst: 7, res: 2, tou: 2, speed: 6, initiative: 5, dodge: 23 },
     balanceValue: 10
   },
   {
-    file: "Example2GermanImport.md",
+    file: "FirstImport_Example2GermanImport.md",
     baseValues: { str: 71, agi: 26, pre: 26, con: 60, int: 75, cha: 70, wil: 27, see: 36, hear: 25, smell: 47, luck: 21 },
     calculatedValues: { hp: 40, ep: 31, mp: 50, kp: 18, sp: 20, rst: 7, res: 2, tou: 6, speed: 5, initiative: 2, dodge: 22 },
     balanceValue: 13
   },
   {
-    file: "Example3GermanImport.md",
+    file: "FirstImport_Example3GermanImport.md",
     baseValues: { str: 51, agi: 36, pre: 33, con: 28, int: 57, cha: 60, wil: 54, see: 29, hear: 27, smell: 51, luck: 21 },
     calculatedValues: { hp: 18, ep: 22, mp: 38, kp: 36, sp: 21, rst: 5, res: 5, tou: 2, speed: 5, initiative: 3, dodge: 18 },
     balanceValue: 60
@@ -57,7 +57,7 @@ for (const example of examples) {
 }
 
 test("expands slash-separated combat bases into aligned talent variants", async () => {
-  const text = await readFile(new URL("Example1GermanImport.md", import.meta.url), "utf8");
+  const text = await readFile(new URL("FirstImport_Example1GermanImport.md", import.meta.url), "utf8");
   const talents = parseTalentImport(text).talents.filter(talent => talent.name === "Faust");
 
   assert.deepEqual(talents, [
@@ -240,8 +240,8 @@ test("ignores invalid numeric values in profile and stat fields", () => {
   assert.deepEqual(result.calculatedValues, {});
 });
 
-test("imports profile, stats, calculated values, and talents from Example1EnglishImport.md", async () => {
-  const text = await readFile(new URL("Example1EnglishImport.md", import.meta.url), "utf8");
+test("imports profile, stats, calculated values, and talents from FirstImport_Example1EnglishImport.md", async () => {
+  const text = await readFile(new URL("FirstImport_Example1EnglishImport.md", import.meta.url), "utf8");
   const result = parseTalentImport(text);
 
   assert.equal(result.sectionFound, true);

@@ -46,7 +46,7 @@
 - Stat imports update each field's `value` and `total`, preserving its existing modifier. Import does not overwrite current HP or other current resource values.
 - Talent rows require a name, three recognized base labels, and three numeric cells. The imported talent `value` is taken from the second numeric cell ("Werte zuweisen"), not the base-value bonus or calculated sum. Each successful import replaces the actor's talent list with imported talents; if no valid talent rows are present, the list is cleared.
 - Slash-separated combat base alternatives expand to aligned variants. For example, three `Gewandtheit / Stärke` labels produce one talent with all three bases set to `agi` and another with all three set to `str`; alternatives are not mixed across base positions.
-- `tests/Example1EnglishImport.md` and `tests/Example1GermanImport.md`, `tests/Example2GermanImport.md`, and `tests/Example3GermanImport.md` are representative source documents. Keep parser mappings and import updates consistent with their table layout and the Actor schema, and keep all four covered by `tests/talent-import.test.mjs`.
+- `tests/FirstImport_Example1EnglishImport.md` and `tests/FirstImport_Example1GermanImport.md`, `tests/FirstImport_Example2GermanImport.md`, and `tests/FirstImport_Example3GermanImport.md` are representative source documents. Keep parser mappings and import updates consistent with their table layout and the Actor schema, and keep all four covered by `tests/talent-import.test.mjs`.
 
 ## Character sheet and rolls
 - The actor schema stores species under `system.character.species`; the profile sheet edits that field. Import recognizes old `Race` labels but maps them to `species`.

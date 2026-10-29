@@ -35,7 +35,7 @@ test("system manifest has the expected Foundry compatibility and entry point", a
 
   assert.equal(manifest.id, "PnS2");
   assert.equal(manifest.compatibility.minimum, "13");
-  assert.equal(manifest.compatibility.verified, "14");
+  assert.equal(manifest.compatibility.verified, "16");
   assert.ok(manifest.esmodules.includes("scripts/system.js"));
 });
 
