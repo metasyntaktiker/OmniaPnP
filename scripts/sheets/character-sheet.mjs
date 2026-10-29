@@ -473,12 +473,17 @@ export class PnS2CharacterSheet extends foundry.applications.api.HandlebarsAppli
 
     this._sheetActiveTab = result.talents.length > 0 ? "talents" : profileCount > 0 ? "profil" : "basiswerte";
     await this.actor.update(updateData);
-    ui.notifications.info(game.i18n.format("PnS2.Import.Success", {
+    const importMessage = game.i18n.format("PnS2.Import.Success", {
       talents: result.talents.length,
       profile: profileCount,
       baseValues: baseValueCount,
       calculatedValues: calculatedValueCount
-    }));
+    });
+    await ChatMessage.create({
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      content: importMessage
+    });
+    ui.notifications.info(importMessage);
     if (result.skippedRows > 0) {
       ui.notifications.warn(game.i18n.format("PnS2.Import.Skipped", { count: result.skippedRows }));
     }
