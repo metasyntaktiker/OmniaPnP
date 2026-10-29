@@ -148,17 +148,6 @@
       <div class="character-stats">
         <!-- ######## Extra stats ######## -->
         <div class="character-basestats-row">
-          <label title="{{localize "PnS2.EXP_MouseOver"}}">{{localize "PnS2.EXP"}}</label>
-          <input type="number" name="system.exp.value" value="{{system.exp.value}}" />
-          <span class="calc-span">{{system.exp.value}}</span>
-        </div>
-        <div class="character-basestats-row">
-          <label class="rollable" data-roll="1d100" data-key="luck" title="{{localize "PnS2.LUCK_MouseOver"}}">{{localize "PnS2.LUCK"}}</label>
-          <input type="number" name="system.luck.value" value="{{system.luck.value}}" />
-          <span class="calc-span">{{system.luck.value}}</span>
-        </div>
-        <br/>
-        <div class="character-basestats-row">
           <div></div>
           <label>{{localize "PnS2.CharacterSheet.Base"}}</label>
           <label>{{localize "PnS2.CharacterSheet.Modifier"}}</label>
@@ -179,6 +168,12 @@
           <input type="number" name="system.dodge.modifier" value="{{system.dodge.modifier}}" />
           <label>{{system.dodge.total}}</label>
           <span class="calc-span">{{system.dodge.value}} + {{system.dodge.modifier}} = {{system.dodge.total}}</span>
+        </div>
+        <!-- Luck -->
+        <div class="character-basestats-row">
+          <label class="rollable" data-roll="1d100" data-key="luck" title="{{localize "PnS2.LUCK_MouseOver"}}">{{localize "PnS2.LUCK"}}</label>
+          <input type="number" name="system.luck.value" value="{{system.luck.value}}" />
+          <span class="calc-span">{{system.luck.value}}</span>
         </div>
         <br/>
         <!-- ######## Headline ######## -->
@@ -423,6 +418,11 @@
     <div class="tab" data-group="primary" data-tab="profil">
       <!-- Character Profile Information -->
       <div class="character-profile">
+        <div class="character-profile-row">
+          <label title="{{localize "PnS2.EXP_MouseOver"}}">{{localize "PnS2.EXP"}}</label>
+          <input type="number" name="system.exp.value" value="{{system.exp.value}}" />
+          <span class="calc-span">{{system.exp.value}}</span>
+        </div>
         <div>
           <div class="character-profile-row">
             <label>{{localize "PnS2.CharacterSheet.Charactername"}}</label>
