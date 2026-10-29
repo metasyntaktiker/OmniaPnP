@@ -1,4 +1,5 @@
 import { parseTalentImport } from "./talent-import.mjs";
+import { sortTalentsByName } from "./talent-sort.mjs";
 
 export class PnS2CharacterSheet extends foundry.applications.api.HandlebarsApplicationMixin(foundry.applications.sheets.ActorSheetV2) 
 {
@@ -415,7 +416,7 @@ export class PnS2CharacterSheet extends foundry.applications.api.HandlebarsAppli
             value: 0
           };
 
-          const talents = this.actor.system.talents.concat([newTalent]);
+          const talents = sortTalentsByName(this.actor.system.talents.concat([newTalent]));
           this._sheetActiveTab = "talents";
           await this.actor.update({ "system.talents": talents });
         }
@@ -463,9 +464,12 @@ export class PnS2CharacterSheet extends foundry.applications.api.HandlebarsAppli
       updateData[`system.${attribute}.value`] = value;
       updateData[`system.${attribute}.total`] = value + (Number(this.actor.system[attribute]?.modifier) || 0);
     }
-    if (result.talents.length > 0) {
-      updateData["system.talents"] = this.actor.system.talents.concat(result.talents);
-    }
+    // In case a talent import should not replace existing talents:
+    // if (result.talents.length > 0) {
+    //   updateData["system.talents"] = sortTalentsByName(this.actor.system.talents.concat(result.talents));
+    // }
+    // In case a talent import should replace existing talents:
+    updateData["system.talents"] = sortTalentsByName(result.talents);
 
     this._sheetActiveTab = result.talents.length > 0 ? "talents" : profileCount > 0 ? "profil" : "basiswerte";
     await this.actor.update(updateData);
