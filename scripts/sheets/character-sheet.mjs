@@ -467,6 +467,10 @@ export class PnS2CharacterSheet extends foundry.applications.api.HandlebarsAppli
       updateData[`system.${attribute}.value`] = value;
       updateData[`system.${attribute}.total`] = value + (Number(this.actor.system[attribute]?.modifier) || 0);
     }
+    for (const resource of ["hp", "ep", "mp", "kp", "sp"]) {
+      updateData[`system.${resource}.currentValue`] =
+        updateData[`system.${resource}.total`] ?? this.actor.system[resource]?.total ?? 0;
+    }
     // In case a talent import should not replace existing talents:
     // if (result.talents.length > 0) {
     //   updateData["system.talents"] = sortTalentsByName(this.actor.system.talents.concat(result.talents));

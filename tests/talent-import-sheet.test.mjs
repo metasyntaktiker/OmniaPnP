@@ -15,7 +15,14 @@ function createSheet(importText) {
   sheet.element = { querySelector: () => ({ value: importText }) };
   sheet.actor = {
     id: "actor-id",
-    system: { talents: [{ name: "Existing talent", base1: "str", base2: "agi", base3: "wil", value: 5 }] },
+    system: {
+      talents: [{ name: "Existing talent", base1: "str", base2: "agi", base3: "wil", value: 5 }],
+      hp: { total: 15, modifier: 2 },
+      ep: { total: 12, modifier: 0 },
+      mp: { total: 10, modifier: 0 },
+      kp: { total: 8, modifier: 0 },
+      sp: { total: 6, modifier: 0 }
+    },
     update: async updateData => { sheet.updateData = updateData; }
   };
   return sheet;
@@ -65,4 +72,26 @@ test("import without a character name leaves the prototype token name unchanged"
   await sheet._onImportTalents({ preventDefault() {} });
 
   assert.equal(Object.hasOwn(sheet.updateData, "prototypeToken.name"), false);
+});
+
+test("import refills resources to imported maximum totals and existing totals", async () => {
+  mockImportFeedback();
+  const sheet = createSheet([
+    "Lebenspunkte\t20",
+    "Ausdauer\t15",
+    "Mana\t18",
+    "Karma\t9"
+  ].join("\n"));
+
+  await sheet._onImportTalents({ preventDefault() {} });
+
+  assert.equal(sheet.updateData["system.hp.total"], 22);
+  assert.equal(sheet.updateData["system.hp.currentValue"], 22);
+  assert.equal(sheet.updateData["system.ep.total"], 15);
+  assert.equal(sheet.updateData["system.ep.currentValue"], 15);
+  assert.equal(sheet.updateData["system.mp.total"], 18);
+  assert.equal(sheet.updateData["system.mp.currentValue"], 18);
+  assert.equal(sheet.updateData["system.kp.total"], 9);
+  assert.equal(sheet.updateData["system.kp.currentValue"], 9);
+  assert.equal(sheet.updateData["system.sp.currentValue"], 6);
 });
