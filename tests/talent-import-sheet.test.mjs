@@ -4,7 +4,11 @@ import test from "node:test";
 globalThis.foundry = {
   applications: {
     api: { HandlebarsApplicationMixin: Base => Base },
-    sheets: { ActorSheetV2: class {} }
+    sheets: {
+      ActorSheetV2: class {
+        async _prepareContext() { return {}; }
+      }
+    }
   }
 };
 
@@ -94,4 +98,34 @@ test("import refills resources to imported maximum totals and existing totals", 
   assert.equal(sheet.updateData["system.kp.total"], 9);
   assert.equal(sheet.updateData["system.kp.currentValue"], 9);
   assert.equal(sheet.updateData["system.sp.currentValue"], 6);
+});
+
+test("talent combinations use localized short attribute labels", async () => {
+  const labels = {
+    "PnS2.strength_short": "STR",
+    "PnS2.agility_short": "AGI",
+    "PnS2.precision_short": "PRE",
+    "PnS2.constitution_short": "CON",
+    "PnS2.intelligence_short": "INT",
+    "PnS2.charisma_short": "CHA",
+    "PnS2.willpower_short": "WIL",
+    "PnS2.STR": "Strength",
+    "PnS2.AGI": "Agility",
+    "PnS2.WIL": "Will"
+  };
+  globalThis.game = { i18n: { localize: key => labels[key] ?? key } };
+  const sheet = Object.create(PnS2CharacterSheet.prototype);
+  sheet.actor = {
+    system: {
+      talents: [{ name: "Test", base1: "str", base2: "agi", base3: "wil", value: 2 }],
+      str: { total: 60 },
+      agi: { total: 48 },
+      wil: { total: 30 }
+    }
+  };
+
+  const context = await sheet._prepareContext({});
+
+  assert.equal(context.system.talents[0].combination, "STR+AGI+WIL");
+  assert.match(context.system.talents[0].combinationTooltip, /Strength/);
 });
