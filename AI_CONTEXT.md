@@ -40,7 +40,7 @@
 ## Character Import
 - The Import tab is available only while the sheet's edit mode is enabled. Its textarea is temporary; imported text is not saved to the Actor.
 - `scripts/sheets/talent-import.mjs` parses tab-separated and pipe-separated pasted rows. It recognizes English and German labels and tolerates shifted/blank columns in talent rows.
-- Imported profile fields are player name, character name (written to the Actor's `name`), species (`system.character.species`), age, birthplace, home, appearance, height, weight, and backstory. Species labels include Species, Rasse, and Spezies; legacy Race labels also map to `species`. Actor data uses `species`, not `race`. Age can be extracted from values such as `788 BF (19)`.
+- Imported profile fields are player name, character name (written to the Actor's `name` and `prototypeToken.name`), species (`system.character.species`), age, birthplace, home, appearance, height, weight, and backstory. Species labels include Species, Rasse, and Spezies; legacy Race labels also map to `species`. Actor data uses `species`, not `race`. Age can be extracted from values such as `788 BF (19)`.
 - Imported primary/additional base values are STR, AGI, PRE, CON, INT, CHA, WIL, SEE, HEAR, SMELL, and LUCK.
 - Imported calculated values map to existing schema fields: Leben/Lebenspunkte/Hit Points → `hp`; Ausdauer/Endurance → `ep`; Mana → `mp`; Karma → `kp`; Geist/Spirit → `sp`; magic resistance → `rst`; mental resistance → `res`; physical resistance → `tou`; Geschwindigkeit/Speed → `speed`; Initiative → `initiative`; Dodge/Ausweichen → `dodge`.
 - Stat imports update each field's `value` and `total`, preserving its existing modifier. Import does not overwrite current HP or other current resource values.

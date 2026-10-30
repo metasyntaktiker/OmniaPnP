@@ -52,6 +52,17 @@ test("import without valid talent rows clears existing talents", async () => {
 
   await sheet._onImportTalents({ preventDefault() {} });
 
+  assert.equal(sheet.updateData.name, "Imported character");
+  assert.equal(sheet.updateData["prototypeToken.name"], "Imported character");
   assert.deepEqual(sheet.updateData["system.talents"], []);
   assert.deepEqual(chatMessages, [{ speaker: { actor: "actor-id" }, content: "Import complete" }]);
+});
+
+test("import without a character name leaves the prototype token name unchanged", async () => {
+  mockImportFeedback();
+  const sheet = createSheet("Talent\nNew talent\tAgility\tStrength\tWill\t10\t2\t12");
+
+  await sheet._onImportTalents({ preventDefault() {} });
+
+  assert.equal(Object.hasOwn(sheet.updateData, "prototypeToken.name"), false);
 });

@@ -456,6 +456,9 @@ export class PnS2CharacterSheet extends foundry.applications.api.HandlebarsAppli
     for (const [field, value] of Object.entries(result.profile)) {
       updateData[field === "name" ? "name" : `system.character.${field}`] = value;
     }
+    if (result.profile.name) {
+      updateData["prototypeToken.name"] = result.profile.name;
+    }
     for (const [attribute, value] of Object.entries(result.baseValues)) {
       updateData[`system.${attribute}.value`] = value;
       updateData[`system.${attribute}.total`] = value + (Number(this.actor.system[attribute]?.modifier) || 0);
