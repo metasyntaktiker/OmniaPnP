@@ -51,6 +51,7 @@
 ## Character sheet and rolls
 - The actor schema stores species under `system.character.species`; the profile sheet edits that field. Import recognizes old `Race` labels but maps them to `species`.
 - Initiative and Dodge appear directly below Luck in the base-values tab. Both have `value`, `modifier`, and `total`.
+- Foundry combat initiative rolls `1d20 + @initiative.total`.
 - Roll formulas come from each rollable element's `data-roll`: current base attributes, Luck, and Dodge use `1d100`; Initiative uses `1d20`; talents currently use `1d100`.
 - Luck targets its base `value` without a modifier. Other stat rolls, including Initiative and Dodge, target `total` (`value + modifier`). The roll dialog can add a temporary modifier.
 - Critical thresholds depend on die size: `1d20` uses natural 1/20; other rolls use totals ≤2/≥98. Success otherwise means roll total ≤ target.

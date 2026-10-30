@@ -6,6 +6,11 @@ import { PnS2CharacterSheet } from "./sheets/character-sheet.mjs";
 Hooks.once("init", () => {
   console.log("PnS2 | Initializing Pen and Syntax 2");
 
+  CONFIG.Combat.initiative = {
+    formula: "1d20 + @initiative.total",
+    decimals: 0
+  };
+
   // Register data model
   CONFIG.Actor.dataModels.character = PnS2CharacterData;
 
