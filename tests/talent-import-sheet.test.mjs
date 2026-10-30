@@ -53,6 +53,7 @@ test("import replaces existing talents with imported talents", async () => {
   assert.deepEqual(sheet.updateData["system.talents"], [
     { name: "New talent", base1: "agi", base2: "str", base3: "wil", value: 2 }
   ]);
+  assert.equal(sheet.updateData["prototypeToken.actorLink"], true);
   assert.deepEqual(chatMessages, [{ speaker: { actor: "actor-id" }, content: "Import complete" }]);
   assert.deepEqual(notifications, ["Import complete"]);
 });
