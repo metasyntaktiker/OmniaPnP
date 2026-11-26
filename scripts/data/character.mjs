@@ -1,4 +1,4 @@
-export class PnS2CharacterData extends foundry.abstract.DataModel {
+export class OmniaPnPCharacterData extends foundry.abstract.DataModel {
   static defineSchema() {
     return {
       character: new foundry.data.fields.SchemaField({

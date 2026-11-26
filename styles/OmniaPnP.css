@@ -380,14 +380,14 @@ progress:after
   scrollbar-color: #FFFFFF;
 }
 
-.PnS2.sheet .sheet-body .tab {
+.OmniaPnP.sheet .sheet-body .tab {
   height: 100%;
   overflow-y: auto;
   padding: 10px;
   box-sizing: border-box;
 }
 
-.PnS2.sheet .sheet-body .tab:not(.active) {
+.OmniaPnP.sheet .sheet-body .tab:not(.active) {
   display: none;
 }
 
@@ -454,19 +454,19 @@ progress:after
   width: 300px;
 }
 
-.pns2-add-talent-dialog.application.dialog {
+.omniapnp-add-talent-dialog.application.dialog {
   width: 300px;
   min-width: 300px;
   max-width: 300px;
 }
 
-.pns2-add-talent-dialog.application.dialog .window-content {
+.omniapnp-add-talent-dialog.application.dialog .window-content {
   width: 300px;
   min-width: 300px;
   box-sizing: border-box;
 }
 
-.pns2-add-talent-dialog.application.dialog .window-content .dialog-form {
+.omniapnp-add-talent-dialog.application.dialog .window-content .dialog-form {
   width: 100%;
   box-sizing: border-box;
 }

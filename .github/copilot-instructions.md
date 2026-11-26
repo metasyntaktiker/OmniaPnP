@@ -1,8 +1,8 @@
-# Copilot instructions for Pen and Syntax 2
+# Copilot instructions for OmniaPnP
 
 ## Project purpose
 
-PnS2 (Pen and Syntax 2) is a Foundry Virtual Tabletop game system for an original tabletop RPG. Its rules are project-specific; do not assume compatibility with another game system or import rules from one. A core feature is the actor-owned talent system: users can add and remove talents, choose each talent's three base attributes, and set its value.
+OmniaPnP (OmniaPnP) is a Foundry Virtual Tabletop game system for an original tabletop RPG. Its rules are project-specific; do not assume compatibility with another game system or import rules from one. A core feature is the actor-owned talent system: users can add and remove talents, choose each talent's three base attributes, and set its value.
 
 The current Foundry compatibility range is defined by `system.json`. Treat that manifest as authoritative when documentation or old context notes disagree.
 
@@ -10,12 +10,12 @@ The current Foundry compatibility range is defined by `system.json`. Treat that 
 
 - `system.json` — Foundry system ID, version, compatibility, entry points, languages, and document types.
 - `scripts/system.js` — Foundry initialization; registers the character data model and sheet, a Handlebars helper, and a default HP hook.
-- `scripts/data/character.mjs` — `PnS2CharacterData` schema for character profile, settings, attributes, resources, resistances, speed, and talents.
+- `scripts/data/character.mjs` — `OmniaPnPCharacterData` schema for character profile, settings, attributes, resources, resistances, speed, and talents.
 - `scripts/sheets/character-sheet.mjs` — Character-sheet context, input handling, edit and visibility controls, talent management, imports, progress bars, and roll dialogs/results.
 - `scripts/sheets/talent-import.mjs` — Pure parser for pasted character profile, base values, calculated values, and talent rows.
 - `templates/actor/character.hbs` — Character sheet UI, including profile, stats, resource bars, and tabs.
 - `templates/dialog/add-talent.hbs` and `templates/dialog/roll-dialog.hbs` — Talent creation and roll modifier dialogs.
-- `styles/PnS2.css` — Character sheet and dialog styling.
+- `styles/OmniaPnP.css` — Character sheet and dialog styling.
 - `lang/en.json` and `lang/de.json` — English and German localization.
 - `assets/success.svg` and `assets/fail.svg` — Roll-result art.
 - `README.md` — Project/release notes; check `system.json` for current release metadata.

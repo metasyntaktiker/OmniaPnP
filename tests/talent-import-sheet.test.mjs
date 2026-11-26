@@ -12,10 +12,10 @@ globalThis.foundry = {
   }
 };
 
-const { PnS2CharacterSheet } = await import("../scripts/sheets/character-sheet.mjs");
+const { OmniaPnPCharacterSheet } = await import("../scripts/sheets/character-sheet.mjs");
 
 function createSheet(importText) {
-  const sheet = Object.create(PnS2CharacterSheet.prototype);
+  const sheet = Object.create(OmniaPnPCharacterSheet.prototype);
   sheet.element = { querySelector: () => ({ value: importText }) };
   sheet.actor = {
     id: "actor-id",
@@ -103,19 +103,19 @@ test("import refills resources to imported maximum totals and existing totals", 
 
 test("talent combinations use localized short attribute labels", async () => {
   const labels = {
-    "PnS2.strength_short": "STR",
-    "PnS2.agility_short": "AGI",
-    "PnS2.precision_short": "PRE",
-    "PnS2.constitution_short": "CON",
-    "PnS2.intelligence_short": "INT",
-    "PnS2.charisma_short": "CHA",
-    "PnS2.willpower_short": "WIL",
-    "PnS2.STR": "Strength",
-    "PnS2.AGI": "Agility",
-    "PnS2.WIL": "Will"
+    "OmniaPnP.strength_short": "STR",
+    "OmniaPnP.agility_short": "AGI",
+    "OmniaPnP.precision_short": "PRE",
+    "OmniaPnP.constitution_short": "CON",
+    "OmniaPnP.intelligence_short": "INT",
+    "OmniaPnP.charisma_short": "CHA",
+    "OmniaPnP.willpower_short": "WIL",
+    "OmniaPnP.STR": "Strength",
+    "OmniaPnP.AGI": "Agility",
+    "OmniaPnP.WIL": "Will"
   };
   globalThis.game = { i18n: { localize: key => labels[key] ?? key } };
-  const sheet = Object.create(PnS2CharacterSheet.prototype);
+  const sheet = Object.create(OmniaPnPCharacterSheet.prototype);
   sheet.actor = {
     system: {
       talents: [{ name: "Test", base1: "str", base2: "agi", base3: "wil", value: 2 }],

@@ -1,10 +1,10 @@
-# Project: Pen and Syntax 2 (PnS2) - AI Context
+# Project: OmniaPnP (OmniaPnP) - AI Context
 
 ## System Overview
 - **Target Platform**: Foundry VTT (minimum v13, verified v14; see `system.json`)
 - **Documentation Target Platform**: https://foundryvtt.com/api/index.html
 - **Link to the FoundryVTT Discord Server:** https://discord.com/invite/foundryvtt
-- **System ID**: `PnS2`
+- **System ID**: `OmniaPnP`
 - **Manifest**: `system.json`
 
 ## Tech Stack
@@ -16,8 +16,8 @@
 - **Root**: Repository root.
 - **Entry Point**: `scripts/system.js`
   - Handles `init` hook.
-  - Registers `PnS2CharacterData` (DataModel).
-  - Registers `PnS2CharacterSheet` (Sheet).
+  - Registers `OmniaPnPCharacterData` (DataModel).
+  - Registers `OmniaPnPCharacterSheet` (Sheet).
   - Handles `preCreateActor` for default HP.
 
 ## Key Files & Directories
@@ -25,11 +25,11 @@
 |------|-------------|
 | `system.json` | System configuration, authors, styles, and language definitions. |
 | `scripts/system.js` | Main entry point. Initializes system and registers components. |
-| `scripts/data/character.mjs` | `PnS2CharacterData` class definition (DataModel). |
-| `scripts/sheets/character-sheet.mjs` | `PnS2CharacterSheet`; handles sheet UI, editing, imports, and rolls. |
+| `scripts/data/character.mjs` | `OmniaPnPCharacterData` class definition (DataModel). |
+| `scripts/sheets/character-sheet.mjs` | `OmniaPnPCharacterSheet`; handles sheet UI, editing, imports, and rolls. |
 | `scripts/sheets/talent-import.mjs` | Parses pasted character/profile, stat, calculated-value, and talent data. |
 | `templates/actor/character.hbs` | Character sheet tabs and form controls, including the Import tab. |
-| `styles/PnS2.css` | Main stylesheet. |
+| `styles/OmniaPnP.css` | Main stylesheet. |
 | `lang/*.json` | Localization files (en, de). |
 
 ## Development Patterns
@@ -56,7 +56,7 @@
 - Luck targets its base `value` without a modifier. Other stat rolls, including Initiative and Dodge, target `total` (`value + modifier`). The roll dialog can add a temporary modifier.
 - Critical thresholds depend on die size: `1d20` uses natural 1/20; other rolls use totals ≤2/≥98. Success otherwise means roll total ≤ target.
 - Roll chat messages use the Foundry `core.messageMode` setting through `Roll.toMessage`; do not use deprecated `core.rollMode`.
-- Initiative label localization uses `PnS2.INIT`, and Dodge uses `PnS2.DOD`; their data keys are `initiative` and `dodge`.
+- Initiative label localization uses `OmniaPnP.INIT`, and Dodge uses `OmniaPnP.DOD`; their data keys are `initiative` and `dodge`.
 
 ## Validation
 - Node.js 18+ is required for the dependency-free test procedure. Run `npm test` for automated tests or `npm run check` for JavaScript syntax checks followed by the tests.

@@ -33,7 +33,7 @@ function expandLocalizationKeys(messages) {
 test("system manifest has the expected Foundry compatibility and entry point", async () => {
   const manifest = await readJson("system.json");
 
-  assert.equal(manifest.id, "PnS2");
+  assert.equal(manifest.id, "OmniaPnP");
   assert.equal(manifest.compatibility.minimum, "13");
   assert.equal(manifest.compatibility.verified, "16");
   assert.ok(manifest.esmodules.includes("scripts/system.js"));
@@ -47,15 +47,15 @@ for (const locale of ["en", "de"]) {
       ? { SP: "Spirit", RST: "Resistance", RES: "Resilience", TOU: "Toughness", INIT: "Initiative", DOD: "Dodge" }
       : { SP: "Geist", RST: "Widerstand", RES: "Belastbarkeit", TOU: "Zähigkeit", INIT: "Initiative", DOD: "Ausweichen" };
 
-    assert.equal(typeof tree.PnS2.Import.Tab, "string");
-    assert.equal(typeof tree.PnS2.Import.NoData, "string");
-    assert.equal(typeof tree.PnS2.Import.Success, "string");
+    assert.equal(typeof tree.OmniaPnP.Import.Tab, "string");
+    assert.equal(typeof tree.OmniaPnP.Import.NoData, "string");
+    assert.equal(typeof tree.OmniaPnP.Import.Success, "string");
     for (const [key, label] of Object.entries(expectedStats)) {
-      assert.equal(tree.PnS2[key], label);
-      assert.equal(typeof tree.PnS2[`${key}_MouseOver`], "string");
+      assert.equal(tree.OmniaPnP[key], label);
+      assert.equal(typeof tree.OmniaPnP[`${key}_MouseOver`], "string");
     }
     assert.equal(
-      tree.PnS2.CharacterSheet.Species,
+      tree.OmniaPnP.CharacterSheet.Species,
       locale === "en" ? "Species" : "Spezies"
     );
   });

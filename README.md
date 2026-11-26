@@ -1,9 +1,9 @@
 ## Create a new version for Foundry to download
 1) Check the `system.json` and keep the "version" updated
 2) Update the "manifest" and "download" versions the same as the **tag** name
-3) To create a bundle for download you need to prepare a "Release" version on github: https://github.com/metasyntaktiker/PnS2/releases/tag/0.1.1
+3) To create a bundle for download you need to prepare a "Release" version on github: https://github.com/metasyntaktiker/OmniaPnP/releases/tag/0.1.1
     - Also attach a binary file, which is simply the `system.json` file
-4) Manifest-URL you need to use for foundry install would be something like this https://github.com/metasyntaktiker/PnS2/releases/download/0.1.0/system.json
+4) Manifest-URL you need to use for foundry install would be something like this https://github.com/metasyntaktiker/OmniaPnP/releases/download/0.1.0/system.json
 
 ## Development checks
 

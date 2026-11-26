@@ -1,10 +1,10 @@
 globalThis.activateLogging = false;
 
-import { PnS2CharacterData } from "./data/character.mjs";
-import { PnS2CharacterSheet } from "./sheets/character-sheet.mjs";
+import { OmniaPnPCharacterData } from "./data/character.mjs";
+import { OmniaPnPCharacterSheet } from "./sheets/character-sheet.mjs";
 
 Hooks.once("init", () => {
-  console.log("PnS2 | Initializing Pen and Syntax 2");
+  console.log("OmniaPnP | Initializing OmniaPnP");
 
   CONFIG.Combat.initiative = {
     formula: "1d20 + @initiative.total",
@@ -12,12 +12,12 @@ Hooks.once("init", () => {
   };
 
   // Register data model
-  CONFIG.Actor.dataModels.character = PnS2CharacterData;
+  CONFIG.Actor.dataModels.character = OmniaPnPCharacterData;
 
   // Register sheet
   foundry.documents.collections.Actors.registerSheet(
-    "PnS2",
-    PnS2CharacterSheet,
+    "OmniaPnP",
+    OmniaPnPCharacterSheet,
     {
       types: ["character"],
       makeDefault: true

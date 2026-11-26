@@ -1,10 +1,10 @@
 {
-  "id": "PnS2",
-  "title": "Pen and Syntax 2",
-  "description": "PnS2 — A clean, data-first tabletop RPG system.",
+  "id": "OmniaPnP",
+  "title": "Omnia Pen and Paper",
+  "description": "Omnia Pen and Paper — A clean, data-first tabletop RPG system.",
   "version": "0.2.4",
-  "manifest": "https://github.com/metasyntaktiker/PnS2/releases/download/0.2.4/system.json",
-  "download": "https://github.com/metasyntaktiker/PnS2/archive/refs/tags/0.2.4.zip",
+  "manifest": "https://github.com/metasyntaktiker/OmniaPnP/releases/download/0.2.4/system.json",
+  "download": "https://github.com/metasyntaktiker/OmniaPnP/archive/refs/tags/0.2.4.zip",
 
   "compatibility": {
     "minimum": "13",
@@ -20,7 +20,7 @@
   ],
 
   "styles": [
-    "styles/PnS2.css"
+    "styles/OmniaPnP.css"
   ],
 
   "languages": [

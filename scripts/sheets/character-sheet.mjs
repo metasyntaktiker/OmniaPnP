@@ -1,12 +1,12 @@
 import { parseTalentImport } from "./talent-import.mjs";
 import { sortTalentsByName } from "./talent-sort.mjs";
 
-export class PnS2CharacterSheet extends foundry.applications.api.HandlebarsApplicationMixin(foundry.applications.sheets.ActorSheetV2) 
+export class OmniaPnPCharacterSheet extends foundry.applications.api.HandlebarsApplicationMixin(foundry.applications.sheets.ActorSheetV2) 
 {
   constructor(...args) 
   {
     super(...args);
-    if (activateLogging) { console.log("----PnS2CharacterSheet opened for actor:", this.document.name); }
+    if (activateLogging) { console.log("----OmniaPnPCharacterSheet opened for actor:", this.document.name); }
     // Set edit mode to locked by default
     this._editModeDisabled = true;
     // Calculation visibility (hidden by default)
@@ -15,13 +15,13 @@ export class PnS2CharacterSheet extends foundry.applications.api.HandlebarsAppli
 
   static PARTS = {
     main: {
-      template: "systems/PnS2/templates/actor/character.hbs"
+      template: "systems/OmniaPnP/templates/actor/character.hbs"
     }
   };
 
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ["PnS2", "sheet", "actor", "character"],
+      classes: ["OmniaPnP", "sheet", "actor", "character"],
       width: 800,
       height: "auto",
       submitOnChange: false,
@@ -58,12 +58,12 @@ export class PnS2CharacterSheet extends foundry.applications.api.HandlebarsAppli
           cha: "charisma_short",
           wil: "willpower_short"
         };
-        const attr1 = game.i18n.localize(`PnS2.${talent.base1.toUpperCase()}`);
-        const attr2 = game.i18n.localize(`PnS2.${talent.base2.toUpperCase()}`);
-        const attr3 = game.i18n.localize(`PnS2.${talent.base3.toUpperCase()}`);
-        const shortAttr1 = game.i18n.localize(`PnS2.${shortLabels[talent.base1]}`);
-        const shortAttr2 = game.i18n.localize(`PnS2.${shortLabels[talent.base2]}`);
-        const shortAttr3 = game.i18n.localize(`PnS2.${shortLabels[talent.base3]}`);
+        const attr1 = game.i18n.localize(`OmniaPnP.${talent.base1.toUpperCase()}`);
+        const attr2 = game.i18n.localize(`OmniaPnP.${talent.base2.toUpperCase()}`);
+        const attr3 = game.i18n.localize(`OmniaPnP.${talent.base3.toUpperCase()}`);
+        const shortAttr1 = game.i18n.localize(`OmniaPnP.${shortLabels[talent.base1]}`);
+        const shortAttr2 = game.i18n.localize(`OmniaPnP.${shortLabels[talent.base2]}`);
+        const shortAttr3 = game.i18n.localize(`OmniaPnP.${shortLabels[talent.base3]}`);
         talent.combination = `${shortAttr1}+${shortAttr2}+${shortAttr3}`;
         talent.combinationTooltip = `(${attr1} (${context.system[talent.base1]?.total}) / 3 + ${attr2} (${context.system[talent.base2]?.total}) / 3 + ${attr3} (${context.system[talent.base3]?.total} / 3)) / 3 = ${talent.baseSum}`;
       });
@@ -381,22 +381,22 @@ export class PnS2CharacterSheet extends foundry.applications.api.HandlebarsAppli
     event.preventDefault();
 
     const baseValues = {
-        "str": "PnS2.STR",
-        "agi": "PnS2.AGI",
-        "pre": "PnS2.PRE",
-        "con": "PnS2.CON",
-        "int": "PnS2.INT",
-        "cha": "PnS2.CHA",
-        "wil": "PnS2.WIL"
+        "str": "OmniaPnP.STR",
+        "agi": "OmniaPnP.AGI",
+        "pre": "OmniaPnP.PRE",
+        "con": "OmniaPnP.CON",
+        "int": "OmniaPnP.INT",
+        "cha": "OmniaPnP.CHA",
+        "wil": "OmniaPnP.WIL"
     };
 
-    const template = "systems/PnS2/templates/dialog/add-talent.hbs";
+    const template = "systems/OmniaPnP/templates/dialog/add-talent.hbs";
     const html = await foundry.applications.handlebars.renderTemplate(template, { baseValues });
     const DialogClass = foundry.applications.api.DialogV2;
 
     const dialog = new DialogClass({
-    window: { title: game.i18n.localize("PNS.Talent.Add") },
-    classes: ["pns2-add-talent-dialog"],
+    window: { title: game.i18n.localize("Omnia.Talent.Add") },
+    classes: ["omniapnp-add-talent-dialog"],
     width: 300,
     minWidth: 300,
     maxWidth: 300,
@@ -404,7 +404,7 @@ export class PnS2CharacterSheet extends foundry.applications.api.HandlebarsAppli
     buttons: [
     {
       action: "apply",
-      label: game.i18n.localize("PNS.Button.Apply"),
+      label: game.i18n.localize("Omnia.Button.Apply"),
       default: true,
       //callback: (event, button, dialog) => button.form.elements.choice.value
         callback: async (event) => {
@@ -435,7 +435,7 @@ export class PnS2CharacterSheet extends foundry.applications.api.HandlebarsAppli
     },
     {
       action: "cancel",
-      label: game.i18n.localize("PNS.Button.Cancel")
+      label: game.i18n.localize("Omnia.Button.Cancel")
     }],
     submit: result =>
     {
@@ -457,9 +457,9 @@ export class PnS2CharacterSheet extends foundry.applications.api.HandlebarsAppli
     const baseValueCount = Object.keys(result.baseValues).length;
     const calculatedValueCount = Object.keys(result.calculatedValues).length;
     if (result.talents.length === 0 && profileCount === 0 && baseValueCount === 0 && calculatedValueCount === 0) {
-      ui.notifications.warn(game.i18n.localize("PnS2.Import.NoData"));
+      ui.notifications.warn(game.i18n.localize("OmniaPnP.Import.NoData"));
       if (result.skippedRows > 0) {
-        ui.notifications.warn(game.i18n.format("PnS2.Import.Skipped", { count: result.skippedRows }));
+        ui.notifications.warn(game.i18n.format("OmniaPnP.Import.Skipped", { count: result.skippedRows }));
       }
       return;
     }
@@ -493,7 +493,7 @@ export class PnS2CharacterSheet extends foundry.applications.api.HandlebarsAppli
 
     this._sheetActiveTab = result.talents.length > 0 ? "talents" : profileCount > 0 ? "profil" : "basiswerte";
     await this.actor.update(updateData);
-    const importMessage = game.i18n.format("PnS2.Import.Success", {
+    const importMessage = game.i18n.format("OmniaPnP.Import.Success", {
       talents: result.talents.length,
       profile: profileCount,
       baseValues: baseValueCount,
@@ -505,7 +505,7 @@ export class PnS2CharacterSheet extends foundry.applications.api.HandlebarsAppli
     });
     ui.notifications.info(importMessage);
     if (result.skippedRows > 0) {
-      ui.notifications.warn(game.i18n.format("PnS2.Import.Skipped", { count: result.skippedRows }));
+      ui.notifications.warn(game.i18n.format("OmniaPnP.Import.Skipped", { count: result.skippedRows }));
     }
   }
 
@@ -554,8 +554,8 @@ export class PnS2CharacterSheet extends foundry.applications.api.HandlebarsAppli
         attributeLabel = talent.name;
         attributeTotal = baseSum + talent.value;
         originalFlavorText = `
-          ${game.i18n.localize('PNS.Talent.baseSum')}: ${baseSum} + 
-          ${game.i18n.localize('PNS.Talent.talentValue')}: ${talent.value}
+          ${game.i18n.localize('Omnia.Talent.baseSum')}: ${baseSum} + 
+          ${game.i18n.localize('Omnia.Talent.talentValue')}: ${talent.value}
         `;
       }
       // Handle Luck Rolls
@@ -566,9 +566,9 @@ export class PnS2CharacterSheet extends foundry.applications.api.HandlebarsAppli
 
         const value = Number(stat.value);
 
-        attributeLabel = game.i18n.localize(`PnS2.${attributeKey.toUpperCase()}`);
+        attributeLabel = game.i18n.localize(`OmniaPnP.${attributeKey.toUpperCase()}`);
         attributeTotal = stat.value;
-        originalFlavorText = `${value} (${game.i18n.localize('PnS2.CharacterSheet.Base')})`;
+        originalFlavorText = `${value} (${game.i18n.localize('OmniaPnP.CharacterSheet.Base')})`;
       }
       // Handle Attribute Rolls
       else 
@@ -580,23 +580,23 @@ export class PnS2CharacterSheet extends foundry.applications.api.HandlebarsAppli
         const modifier = Number(stat.modifier);
         
         const localizationKey = { dodge: "DOD", initiative: "INIT" }[attributeKey] ?? attributeKey.toUpperCase();
-        attributeLabel = game.i18n.localize(`PnS2.${localizationKey}`);
+        attributeLabel = game.i18n.localize(`OmniaPnP.${localizationKey}`);
         attributeTotal = stat.total;
-        originalFlavorText = `${value} (${game.i18n.localize('PnS2.CharacterSheet.Base')}) + ${modifier} (${game.i18n.localize('PnS2.CharacterSheet.Modifier')}) = ${attributeTotal}`;
+        originalFlavorText = `${value} (${game.i18n.localize('OmniaPnP.CharacterSheet.Base')}) + ${modifier} (${game.i18n.localize('OmniaPnP.CharacterSheet.Modifier')}) = ${attributeTotal}`;
       }
 
       // Modificator Roll Dialog
-      const template = "systems/PnS2/templates/dialog/roll-dialog.hbs";
+      const template = "systems/OmniaPnP/templates/dialog/roll-dialog.hbs";
       const html = await foundry.applications.handlebars.renderTemplate(template, { targetValue: attributeTotal });
       const DialogClass = foundry.applications.api.DialogV2;
 
       const dialog = new DialogClass({
-        window: { title: game.i18n.localize("PnS2.Roll.DialogTitle") },
+        window: { title: game.i18n.localize("OmniaPnP.Roll.DialogTitle") },
         content: html,
         buttons: [
           {
             action: "roll",
-            label: game.i18n.localize("PnS2.Roll.RollButton"),
+            label: game.i18n.localize("OmniaPnP.Roll.RollButton"),
             default: true,
             callback: async (event) => {
               const form = event.currentTarget.closest('.dialog').querySelector('form');
@@ -611,9 +611,9 @@ export class PnS2CharacterSheet extends foundry.applications.api.HandlebarsAppli
 
               let flavorText = originalFlavorText;
               if (modifier !== 0) {
-                flavorText += ` + ${modifier} (${game.i18n.localize('PnS2.Roll.Modify')}) = ${newAttributeTotal}`;
+                flavorText += ` + ${modifier} (${game.i18n.localize('OmniaPnP.Roll.Modify')}) = ${newAttributeTotal}`;
               }
-              const chatFlavor = `${attributeLabel} ${game.i18n.localize('PnS2.Roll.Text')} (${game.i18n.localize('PnS2.RollTarget')}: ${newAttributeTotal})`;
+              const chatFlavor = `${attributeLabel} ${game.i18n.localize('OmniaPnP.Roll.Text')} (${game.i18n.localize('OmniaPnP.RollTarget')}: ${newAttributeTotal})`;
 
               const isD20Roll = dice.faces === 20;
               const isCriticalSuccess = isD20Roll ? roll.total === 1 : roll.total <= 2;
@@ -624,17 +624,17 @@ export class PnS2CharacterSheet extends foundry.applications.api.HandlebarsAppli
               let resultIcon;
 
               if (isCriticalSuccess) {
-                resultString = `<strong>${game.i18n.localize("PnS2.CRITICALSUCCESS")}</strong>`;
-                resultIcon = `<div><img class="roll-critical-success" src="systems/PnS2/assets/success.svg"/><img class="roll-critical-success" src="systems/PnS2/assets/success.svg"/><img class="roll-critical-success" src="systems/PnS2/assets/success.svg"/></div>`;
+                resultString = `<strong>${game.i18n.localize("OmniaPnP.CRITICALSUCCESS")}</strong>`;
+                resultIcon = `<div><img class="roll-critical-success" src="systems/OmniaPnP/assets/success.svg"/><img class="roll-critical-success" src="systems/OmniaPnP/assets/success.svg"/><img class="roll-critical-success" src="systems/OmniaPnP/assets/success.svg"/></div>`;
               } else if (isCriticalFail) {
-                resultString = `<strong>${game.i18n.localize("PnS2.CRITICALFAIL")}</strong>`;
-                resultIcon = `<div><img class="roll-critical-fail" src="systems/PnS2/assets/fail.svg"/><img class="roll-critical-fail" src="systems/PnS2/assets/fail.svg"/><img class="roll-critical-fail" src="systems/PnS2/assets/fail.svg"/></div>`;
+                resultString = `<strong>${game.i18n.localize("OmniaPnP.CRITICALFAIL")}</strong>`;
+                resultIcon = `<div><img class="roll-critical-fail" src="systems/OmniaPnP/assets/fail.svg"/><img class="roll-critical-fail" src="systems/OmniaPnP/assets/fail.svg"/><img class="roll-critical-fail" src="systems/OmniaPnP/assets/fail.svg"/></div>`;
               } else if (isSuccess) {
-                resultString = `<strong>${game.i18n.localize("PnS2.SUCCESS")}</strong>`;
-                resultIcon = `<div> <img class="roll-success" src="systems/PnS2/assets/success.svg"/></div>`;
+                resultString = `<strong>${game.i18n.localize("OmniaPnP.SUCCESS")}</strong>`;
+                resultIcon = `<div> <img class="roll-success" src="systems/OmniaPnP/assets/success.svg"/></div>`;
               } else {
-                resultString = `<strong>${game.i18n.localize("PnS2.FAIL")}</strong>`;
-                resultIcon = `<div> <img class="roll-fail" src="systems/PnS2/assets/fail.svg"/> </div>`;
+                resultString = `<strong>${game.i18n.localize("OmniaPnP.FAIL")}</strong>`;
+                resultIcon = `<div> <img class="roll-fail" src="systems/OmniaPnP/assets/fail.svg"/> </div>`;
               }
 
               dice.options.flavor = flavorText;
@@ -655,7 +655,7 @@ export class PnS2CharacterSheet extends foundry.applications.api.HandlebarsAppli
                 flavor: chatFlavor,
                 content,
                 flags: {
-                  PnS2: {
+                  OmniaPnP: {
                     attribute: attributeKey,
                     target: newAttributeTotal,
                     isSuccess
@@ -668,7 +668,7 @@ export class PnS2CharacterSheet extends foundry.applications.api.HandlebarsAppli
           }, 
           {
             action: "cancel",
-            label: game.i18n.localize("PNS.Button.Cancel")
+            label: game.i18n.localize("Omnia.Button.Cancel")
           }
         ],
         submit: () => {} // Prevent default submission
