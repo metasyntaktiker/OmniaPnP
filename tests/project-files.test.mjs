@@ -66,3 +66,17 @@ test("English and German localizations contain the same translation keys", async
   const german = await readJson("lang/de.json");
   assert.deepEqual(Object.keys(german).sort(), Object.keys(english).sort());
 });
+
+test("chat roll results include an expandable target breakdown", async () => {
+  const sheetSource = await readFile(new URL("../scripts/sheets/character-sheet.mjs", import.meta.url), "utf8");
+  const stylesheet = await readFile(new URL("../styles/OmniaPnP.css", import.meta.url), "utf8");
+
+  assert.match(sheetSource, /<details class="omnia-roll-details">/);
+  assert.match(sheetSource, /<summary>\s*<h4 class="dice-formula">\$\{resultIcon\}<\/h4>\s*<\/summary>/);
+  assert.doesNotMatch(sheetSource, /<dl>/);
+  assert.match(sheetSource, /omnia-roll-equation-row/);
+  assert.match(sheetSource, /OmniaPnP\.Roll\.IntermediateResult/);
+  assert.match(sheetSource, /OmniaPnP\.Roll\.Result/);
+  assert.match(sheetSource, /baseTarget: attributeTotal/);
+  assert.match(stylesheet, /\.omnia-roll-details summary/);
+});

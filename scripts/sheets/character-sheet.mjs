@@ -538,6 +538,7 @@ export class OmniaPnPCharacterSheet extends foundry.applications.api.HandlebarsA
       let attributeLabel;
       let attributeTotal;
       let originalFlavorText;
+      let calculationParts;
 
       // Handle Talent Rolls
       if (attributeKey.startsWith('talent-')) 
@@ -557,6 +558,10 @@ export class OmniaPnPCharacterSheet extends foundry.applications.api.HandlebarsA
           ${game.i18n.localize('Omnia.Talent.baseSum')}: ${baseSum} + 
           ${game.i18n.localize('Omnia.Talent.talentValue')}: ${talent.value}
         `;
+        calculationParts = [
+          { operation: "", label: game.i18n.localize("OmniaPnP.CharacterSheet.Base"), value: baseSum },
+          { operation: "+", label: game.i18n.localize("Omnia.Talent.talentValue"), value: talent.value }
+        ];
       }
       // Handle Luck Rolls
       else if (attributeKey.startsWith('luck'))
@@ -569,6 +574,9 @@ export class OmniaPnPCharacterSheet extends foundry.applications.api.HandlebarsA
         attributeLabel = game.i18n.localize(`OmniaPnP.${attributeKey.toUpperCase()}`);
         attributeTotal = stat.value;
         originalFlavorText = `${value} (${game.i18n.localize('OmniaPnP.CharacterSheet.Base')})`;
+        calculationParts = [
+          { operation: "", label: game.i18n.localize("OmniaPnP.CharacterSheet.Base"), value }
+        ];
       }
       // Handle Attribute Rolls
       else 
@@ -583,6 +591,10 @@ export class OmniaPnPCharacterSheet extends foundry.applications.api.HandlebarsA
         attributeLabel = game.i18n.localize(`OmniaPnP.${localizationKey}`);
         attributeTotal = stat.total;
         originalFlavorText = `${value} (${game.i18n.localize('OmniaPnP.CharacterSheet.Base')}) + ${modifier} (${game.i18n.localize('OmniaPnP.CharacterSheet.Modifier')}) = ${attributeTotal}`;
+        calculationParts = [
+          { operation: "", label: game.i18n.localize("OmniaPnP.CharacterSheet.Base"), value },
+          { operation: "+", label: game.i18n.localize("OmniaPnP.CharacterSheet.Modifier"), value: modifier }
+        ];
       }
 
       // Modificator Roll Dialog
@@ -640,14 +652,56 @@ export class OmniaPnPCharacterSheet extends foundry.applications.api.HandlebarsA
               dice.options.flavor = flavorText;
               dice.options.label = resultIcon;
 
+              const calculationLabel = game.i18n.localize("OmniaPnP.Roll.Calculation");
+              const intermediateLabel = game.i18n.localize("OmniaPnP.Roll.IntermediateResult");
+              const resultLabel = game.i18n.localize("OmniaPnP.Roll.Result");
+              const modificationLabelText = game.i18n.localize("OmniaPnP.Roll.Modify");
+              const modificationOperation = modifier < 0 ? "−" : "+";
+              const calculationRows = calculationParts.map(part => `
+                <div class="omnia-roll-equation-row">
+                  <span class="omnia-roll-equation-operation">${part.operation}</span>
+                  <span class="omnia-roll-equation-label">${part.label}:</span>
+                  <span class="omnia-roll-equation-value">${part.value}</span>
+                </div>
+              `).join("");
+              const dialogueModificationRow = `
+                <div class="omnia-roll-equation-row">
+                  <span class="omnia-roll-equation-operation">${modificationOperation}</span>
+                  <span class="omnia-roll-equation-label">${modificationLabelText}:</span>
+                  <span class="omnia-roll-equation-value">${Math.abs(modifier)}</span>
+                </div>
+              `;
               const content = `
                 <div class="dice-roll">
-                    <div class="dice-result">
+                  <div class="dice-result">
+                    <details class="omnia-roll-details">
+                      <summary>
                         <h4 class="dice-formula">${resultIcon}</h4>
-                        <h4 class="dice-total">${roll.total}</h4>
-                    </div>
+                      </summary>
+                      <div class="omnia-roll-breakdown">
+                        <p>${resultString}</p>
+                        <div class="omnia-roll-calculation">
+                          <strong>${calculationLabel}:</strong>
+                          <div class="omnia-roll-equation">
+                            ${calculationRows}
+                            <div class="omnia-roll-equation-row omnia-roll-equation-result">
+                              <span class="omnia-roll-equation-operation">=</span>
+                              <span class="omnia-roll-equation-label">${intermediateLabel}:</span>
+                              <span class="omnia-roll-equation-value">${attributeTotal}</span>
+                            </div>
+                            ${dialogueModificationRow}
+                            <div class="omnia-roll-equation-row omnia-roll-equation-result">
+                              <span class="omnia-roll-equation-operation">=</span>
+                              <span class="omnia-roll-equation-label">${resultLabel}:</span>
+                              <span class="omnia-roll-equation-value">${newAttributeTotal}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </details>
+                    <h4 class="dice-total">${roll.total}</h4>
+                  </div>
                 </div>
-                <p>${resultString}</p>
               `;
 
               await roll.toMessage({
@@ -657,7 +711,10 @@ export class OmniaPnPCharacterSheet extends foundry.applications.api.HandlebarsA
                 flags: {
                   OmniaPnP: {
                     attribute: attributeKey,
+                    baseTarget: attributeTotal,
+                    modifier,
                     target: newAttributeTotal,
+                    calculation: flavorText,
                     isSuccess
                   }
                 }

@@ -363,6 +363,89 @@ progress:after
   display: inline-block;
 }
 
+.omnia-roll-details {
+  cursor: pointer;
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: center;
+}
+
+.omnia-roll-details summary {
+  display: block;
+  list-style: none;
+}
+
+.omnia-roll-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.omnia-roll-details summary::after {
+  content: "";
+}
+
+.omnia-roll-details summary .dice-formula {
+  cursor: pointer;
+}
+
+.omnia-roll-target-summary {
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 0.25rem;
+}
+
+.omnia-roll-breakdown {
+  border-top: 1px solid var(--color-border-light-primary, #777);
+  margin-top: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  text-align: left;
+  cursor: default;
+}
+
+.omnia-roll-breakdown dl {
+  display: grid;
+  grid-template-columns: minmax(8rem, 1fr) auto;
+  gap: 0.15rem 0.75rem;
+  margin: 0.25rem 0;
+}
+
+.omnia-roll-breakdown dt,
+.omnia-roll-breakdown dd {
+  margin: 0;
+}
+
+.omnia-roll-calculation {
+  margin-top: 0.25rem;
+}
+
+.omnia-roll-equation {
+  margin-top: 0.25rem;
+  font-family: var(--font-monospace, monospace);
+}
+
+.omnia-roll-equation-row {
+  display: grid;
+  grid-template-columns: 1.5rem minmax(8rem, 1fr) auto;
+  align-items: baseline;
+  gap: 0.35rem;
+  line-height: 1.35;
+}
+
+.omnia-roll-equation-operation {
+  text-align: right;
+}
+
+.omnia-roll-equation-value {
+  text-align: right;
+  min-width: 2rem;
+}
+
+.omnia-roll-equation-result {
+  border-top: 1px solid var(--color-border-light-primary, #777);
+  margin-top: 0.2rem;
+  padding-top: 0.2rem;
+  font-weight: bold;
+}
+
 /* Tab navigation */
 .sheet-tabs {
   flex: 0 0 40px;
